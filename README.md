@@ -8,7 +8,7 @@ Create and manipulate [RGBA](http://en.wikipedia.org/wiki/RGBA_color_space) colo
 Examples
 --------
 
-### Making <span style="color:#EE82EE">violet</span> (#EE82EE):
+### Making violet (#EE82EE):
 
     Color(0xEE82EE)         == "#EE82EE"
     Color("#EE82EE")        == "#EE82EE"
@@ -27,11 +27,6 @@ Examples
     var c = new Color('#ABC123', 0.6);
     c.getRGBA(); // rgba(171,193,35,0.6)
 
-### Defining a custom color:
-
-<pre><code>Color.define(&quot;<a href="http://www.colourlovers.com/color/5CA310/Rind" style="color:#5CA310">rind</a>&quot;, [92, 163, 16])
-Color.get(&quot;<span style="color:#5CA310">rind</span>&quot;) == &quot;<span style="color:#5CA310">#5CA310</span>&quot;</code></pre>
-
 ### `setValue` and `channels`
 
     var myColor = new Color;
@@ -39,6 +34,12 @@ Color.get(&quot;<span style="color:#5CA310">rind</span>&quot;) == &quot;<span st
     myColor == "#AA7F00"
     myColor.channels.red = 0xFF;
     myColor == "#FF7F00" // orange
+
+### Defining a custom color:
+
+    Color.define("rind", [92, 163, 16])
+    Color.get("rind") == "#5CA310"
+
 
 Supported Browsers
 ------------------
@@ -56,8 +57,8 @@ API
 
 color.js is flexible enough to allow you to instantiate color objects however you please:
 
-<pre><code>color = [new ]<em>Color</em>(<strong>color</strong>:int | string, [, <strong>alpha</strong>:float])
-color = [new ]<em>Color</em>(<strong>red</strong>:int | string, <strong>green</strong>:int | string, <strong>blue</strong>:int | string [, <strong>alpha</strong>:float])</code></pre>
+<pre><code>color = [new ]Color(<strong>color</strong>:int | string, [, <strong>alpha</strong>:float])
+color = [new ]Color(<strong>red</strong>:int | string, <strong>green</strong>:int | string, <strong>blue</strong>:int | string [, <strong>alpha</strong>:float])</code></pre>
 
 ### Instance methods and properties
 
