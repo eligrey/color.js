@@ -74,7 +74,7 @@ var Color = (function () {
 		}
 		
 		if (typeof window.getComputedStyle === "undefined") {
-			return false;
+			return False;
 		}
 		
 		var el = document.createElement("div"),
