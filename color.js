@@ -59,8 +59,11 @@ var Color = (function () {
 			alpha: alpha
 		};
 	},
-	proto = Color.prototype,
-	False = false;
+	proto       = Color.prototype,
+	doc         = document,
+	docEl       = doc.documentElement,
+	defaultView = doc.defaultView,
+	False       = false;
 	
 	Color.table = {};
 	
@@ -73,12 +76,11 @@ var Color = (function () {
 			return Color.apply(null, Color.table[color]);
 		}
 		
-		if (typeof window.getComputedStyle === "undefined") {
+		if (typeof defaultView === "undefined" || typeof defaultView.getComputedStyle === "undefined") {
 			return False;
 		}
 		
-		var el = document.createElement("div"),
-		docEl = document.body,
+		var el = doc.createElement("div"),
 		style = el.style,
 		bgColor = "backgroundColor",
 		i,
@@ -98,7 +100,7 @@ var Color = (function () {
 		
 		docEl.appendChild(el);
 		
-		rgb = getComputedStyle(el, null)[bgColor].replace(/[^\d,]/g, "").split(",");
+		rgb = defaultView.getComputedStyle(el, null)[bgColor].replace(/[^\d,]/g, "").split(",");
 		
 		style.removeProperty(bgColor);
 		style.removeProperty("display");
