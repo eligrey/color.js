@@ -60,7 +60,7 @@ color.js is flexible enough to allow you to instantiate color objects however yo
 <pre><code>color = [new ]Color(<strong>color</strong>:int | string, [, <strong>alpha</strong>:float])
 color = [new ]Color(<strong>red</strong>:int | string, <strong>green</strong>:int | string, <strong>blue</strong>:int | string [, <strong>alpha</strong>:float])</code></pre>
 
-### Instance methods and properties
+<h3>Instance methods and properties</h3>
 
 <dl>
   <dt><code>channels</code></dt>
@@ -96,7 +96,7 @@ color = [new ]Color(<strong>red</strong>:int | string, <strong>green</strong>:in
   </dd>
 </dl>
 
-### Class methods
+<h3>Class methods</h3>
 
 <dl>
   <dt><code>Color.define(<strong>colorName</strong>:string, <strong>RGB</strong>:array)</code></dt>
