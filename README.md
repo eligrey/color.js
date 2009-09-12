@@ -1,7 +1,7 @@
 color.js
 ========
 
-*Version 0.2*
+*Version 0.2.1*
 
 Create and manipulate colors with ease.
 
@@ -141,6 +141,8 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
 
 <h3>Constructor methods</h3>
 
+<p>Color names are case-insensitive.</p>
+
 <dl>
   <dt><code>Color.define(<strong>colorName</strong>:string, <strong>RGB</strong>:array)</code></dt>
   <dd>
@@ -153,6 +155,11 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
     name, <code>colorName</code>, before falling back and retrieving
     the computed CSS color values where available. IE is not able to
     retrieve computed color values.
+  </dd>
+  
+  <dt><code>Color.del(<strong>colorName</strong>:string)</code></dt>
+  <dd>
+    Deletes a previously defined color with the name of <code>colorName</code>.
   </dd>
   
   <dt><code>Color.random([<strong>rangeStart</strong>:int | string] [, <strong>rangeEnd</strong>:int | string])</code></dt>

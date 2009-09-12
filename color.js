@@ -1,6 +1,6 @@
 /*
  * color.js
- * Version 0.2
+ * Version 0.2.1
  *
  * 2009-09-11
  * 
@@ -52,11 +52,13 @@ var Color = (function () {
 	},
 	str         = "string",
 	undef       = "undefined",
+	lowerCase   = "toLowerCase",
 	proto       = Color.prototype,
 	math        = Math,
 	doc         = document,
 	docEl       = doc.documentElement,
 	defaultView = doc.defaultView,
+	hasOwnProp  = Object.prototype.hasOwnProperty,
 	False       = false;
 	
 	Color.table = {
@@ -141,11 +143,13 @@ var Color = (function () {
 	Color.TOSTRING = "hexTriplet"; // default toString method used
 	
 	Color.define = function (color, rgb) {
-		Color.table[color] = rgb;
+		Color.table[color[lowerCase]()] = rgb;
 	};
 	
 	Color.get = function (color) {
-		if (color in Color.table) {
+		color = color[lowerCase]();
+		
+		if (hasOwnProp.call(Color.table, color)) {
 			return Color.apply(null, Color.table[color]);
 		}
 		
@@ -160,7 +164,7 @@ var Color = (function () {
 		rgb,
 		i;
 		
-		color = color.replace(/[^a-zA-Z]/g, "").toLowerCase();
+		color = color.replace(/[^a-z]/g, "");
 		
 		style.display = "none";
 		
@@ -190,6 +194,10 @@ var Color = (function () {
 		}
 		
 		return Color.apply(null, rgb);
+	};
+	
+	Color.del = function (color) {
+		return delete Color.table[color[lowerCase]()];
 	};
 	
 	Color.random = function (rangeStart, rangeEnd) {
