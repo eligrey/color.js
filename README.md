@@ -3,7 +3,7 @@ color.js
 
 *Version 0.2*
 
-Create and manipulate [RGBA](http://en.wikipedia.org/wiki/RGBA_color_space) colors with ease.
+Create and manipulate colors with ease.
 
 Examples
 --------

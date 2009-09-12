@@ -14,7 +14,6 @@ var Color = (function () {
 	var Color = function Color (r, g, b, a) {
 		var
 		color    = this,
-		strType  = "string",
 		args     = arguments.length,
 		parseHex = function (h) {
 			return parseInt(h, 16);
@@ -24,7 +23,7 @@ var Color = (function () {
 			(a = 1);
 		
 		if (args < 3) { // called as Color(color [, alpha])
-			if (typeof r === strType) {
+			if (typeof r === str) {
 				r = r.substr(r.indexOf("#") + 1);
 				var threeDigits = r.length === 3;
 				r = parseHex(r);
@@ -45,12 +44,14 @@ var Color = (function () {
 		}
 		
 		this.channels = [
-			typeof r === strType && parseHex(r)   || r,
-			typeof g === strType && parseHex(g)   || g,
-			typeof b === strType && parseHex(b)   || b,
-			typeof a === strType && parseFloat(a) || a
+			typeof r === str && parseHex(r)   || r,
+			typeof g === str && parseHex(g)   || g,
+			typeof b === str && parseHex(b)   || b,
+			typeof a === str && parseFloat(a) || a
 		];
 	},
+	str         = "string",
+	undef       = "undefined",
 	proto       = Color.prototype,
 	math        = Math,
 	doc         = document,
@@ -128,13 +129,13 @@ var Color = (function () {
 	};
 	
 	Color.rgb = function (r, g, b, a) {
-		return new Color(r, g, b, typeof a !== "undefined" ? a : 1)
+		return new Color(r, g, b, typeof a !== undef ? a : 1)
 	};
 	
 	Color.hsl = function (h, s, l, a) {
 		var rgb = Color.HSLtoRGB([h, s, l]),
 		   ceil = math.ceil;
-		return new Color(ceil(rgb[0]), ceil(rgb[1]), ceil(rgb[2]), typeof a !== "undefined" ? a : 1);
+		return new Color(ceil(rgb[0]), ceil(rgb[1]), ceil(rgb[2]), typeof a !== undef ? a : 1);
 	};
 	
 	Color.TOSTRING = "hexTriplet"; // default toString method used
@@ -148,7 +149,7 @@ var Color = (function () {
 			return Color.apply(null, Color.table[color]);
 		}
 		
-		if (typeof defaultView === "undefined" || typeof defaultView.getComputedStyle === "undefined") {
+		if (typeof defaultView === undef || typeof defaultView.getComputedStyle === undef) {
 			return False;
 		}
 		
@@ -192,10 +193,10 @@ var Color = (function () {
 	};
 	
 	Color.random = function (rangeStart, rangeEnd) {
-		typeof rangeStart === "string" &&
+		typeof rangeStart === str &&
 			(rangeStart = Color.get(rangeStart)) &&
 			(rangeStart = rangeStart.getValue());
-		typeof rangeEnd === "string" &&
+		typeof rangeEnd === str &&
 			(rangeEnd = Color.get(rangeEnd)) &&
 			(rangeEnd = rangeEnd.getValue());
 		
