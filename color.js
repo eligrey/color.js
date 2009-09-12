@@ -1,6 +1,6 @@
 /*
  * color.js
- * Version 0.2.1
+ * Version 0.2.1.1
  *
  * 2009-09-11
  * 
@@ -18,9 +18,6 @@ var Color = (function () {
 		parseHex = function (h) {
 			return parseInt(h, 16);
 		};
-		
-		args < 4 &&
-			(a = 1);
 		
 		if (args < 3) { // called as Color(color [, alpha])
 			if (typeof r === str) {
@@ -44,16 +41,18 @@ var Color = (function () {
 		}
 		
 		this.channels = [
-			typeof r === str && parseHex(r)   || r,
-			typeof g === str && parseHex(g)   || g,
-			typeof b === str && parseHex(b)   || b,
-			typeof a === str && parseFloat(a) || a
+			typeof r === str && parseHex(r)    || r,
+			typeof g === str && parseHex(g)    || g,
+			typeof b === str && parseHex(b)    || b,
+			(typeof a !== str && typeof a !== "number") && 1 ||
+			typeof a === str && parseFloatP(a) || a
 		];
 	},
+	proto       = Color.prototype,
 	str         = "string",
 	undef       = "undefined",
 	lowerCase   = "toLowerCase",
-	proto       = Color.prototype,
+	parseFloatP = parseFloat,
 	math        = Math,
 	doc         = document,
 	docEl       = doc.documentElement,
@@ -142,6 +141,35 @@ var Color = (function () {
 	
 	Color.TOSTRING = "hexTriplet"; // default toString method used
 	
+	Color.parse = function (color) {
+		if (color[0] === "#") {
+			return new Color(color);
+		} else if (color === "transparent") {
+			return Color.get(color);
+		}
+		
+		var
+		cssFn = color.substr(0, 3),
+		color = color.replace(/[^\d,.]/g, "").split(","),
+		i     = color.length;
+		
+		while (i--) {
+			color[i] = color[i] && parseFloatP(color[i]) || 0;
+		}
+		
+		switch (cssFn) {
+			case "rgb": // handle rgb[a](red, green, blue [, alpha])
+				return Color.rgb.apply(Color, color); // no need to break;
+			case "hsl": // handle hsl[a](hue, saturation, lightness [, alpha])
+				color[0] /= 360;
+				color[1] /= 100;
+				color[2] /= 100;
+				return Color.hsl.apply(Color, color);
+		}
+		
+		return False;
+	};
+	
 	Color.define = function (color, rgb) {
 		Color.table[color[lowerCase]()] = rgb;
 	};
@@ -161,10 +189,7 @@ var Color = (function () {
 		el      = doc.createElement("div"),
 		style   = el.style,
 		bgColor = "backgroundColor",
-		rgb,
-		i;
-		
-		color = color.replace(/[^a-z]/g, "");
+		color;
 		
 		style.display = "none";
 		
@@ -180,20 +205,14 @@ var Color = (function () {
 		
 		docEl.appendChild(el);
 		
-		rgb = defaultView.getComputedStyle(el, null)[bgColor].replace(/[^\d,]/g, "").split(",");
-		
+		color = defaultView.getComputedStyle(el, null)[bgColor];
+				
 		style.removeProperty(bgColor);
 		style.removeProperty("display");
 		
 		docEl.removeChild(el);
 		
-		i = rgb.length;
-		
-		while (i--) {
-			rgb[i] = rgb[i] && parseInt(rgb[i], 10) || 0;
-		}
-		
-		return Color.apply(null, rgb);
+		return Color.parse(color);
 	};
 	
 	Color.del = function (color) {
@@ -266,8 +285,6 @@ var Color = (function () {
 	proto.hslData = function () {
 		return Color.RGBtoHSL(this.rgbData());
 	};
-	
-	// TODO: get rid of redundancy in the following methods
 	
 	proto.rgb = function () {
 		return "rgb(" + this.rgbData().join(",") + ")";

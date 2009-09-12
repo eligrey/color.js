@@ -1,7 +1,7 @@
 color.js
 ========
 
-*Version 0.2.1*
+*Version 0.2.1.1*
 
 Create and manipulate colors with ease.
 
@@ -47,6 +47,17 @@ Examples
 ### Get a random color between green and blue
 
     Color.random("green", "blue");
+
+### Parsing CSS color values
+
+    red   = Color.get("red"); // arbitrary color name
+    // the next statements also work with Color.get, but not on IE
+    green = Color.parse("rgb(0, 128, 0)");
+    blue  = Color.parse("hsl(240, 100%, 50%)");
+    
+    red.hexTriplet()   === "#ff0000";
+    green.hexTriplet() === "#008000";
+    blue.hexTriplet()  === "#0000ff";
 
 Supported Browsers
 ------------------
@@ -155,6 +166,11 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
     name, <code>colorName</code>, before falling back and retrieving
     the computed CSS color values where available. IE is not able to
     retrieve computed color values.
+  </dd>
+  
+  <dt><code>Color.parse(<strong>cssFunction</strong>:string)</code></dt>
+  <dd>
+    Returns the color represented by a CSS function (eg. <code>hsl(0, 100%, 50%)</code>).
   </dd>
   
   <dt><code>Color.del(<strong>colorName</strong>:string)</code></dt>
