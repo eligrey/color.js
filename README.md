@@ -1,7 +1,7 @@
 color.js
 ========
 
-*Version 0.2.1.1*
+*Version 0.2.1.2*
 
 Create and manipulate colors with ease.
 
@@ -50,9 +50,8 @@ Examples
 
 ### Parsing CSS color values
 
-    red   = Color.get("red"); // arbitrary color name
-    // the next statements also work with Color.get, but not on IE
-    green = Color.parse("rgb(0, 128, 0)");
+    red   = Color.parse("rgb(255, 0, 0)");
+    green = Color.parse("rgb ,128"); // shorthand
     blue  = Color.parse("hsl(240, 100%, 50%)");
     
     red.hexTriplet()   === "#ff0000";
@@ -64,14 +63,31 @@ Supported Browsers
 
  * Firefox 1+
  * Safari 2+
- * IE 6+ (`Color.get` can't compute CSS color values)
- * Opera 8+
+ * IE 6+
+ * Opera 7+
  * Google Chrome 0.1+
+
+
+Usage
+-----
+
+color.js can be used in any ECMAScript environment as it does not make
+use of the DOM. color.js is very useful on the server-side and the
+client-side.
+
+
+color.js CSS Module
+-------------------
+
+The [color.js CSS module](http://github.com/eligrey/color.js/blob/master/css.color.js)
+defines all of the standard CSS colors for use in color.js.
+
 
 API
 ---
 
 **Note:** HSL values are in the form of fractions (0 to 1). A hue value of 0.5 is equivalent to a hue of 180&deg;.
+
 
 ### Instantiation
 
@@ -85,10 +101,10 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
 <h3>Instance methods and properties</h3>
 
 <dl>
-  <dt><code>channels</code></dt>
+  <dt><code>channels : array</code></dt>
   <dd>
     An array containing a color's red, green, blue,
-    and alpha data in that order.
+    and alpha channels in that order.
   </dd>
   
   <dt><code>rgb()</code></dt>
@@ -135,18 +151,18 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
   <dt><code>rgbData()</code></dt>
   <dd>
     Returns an array containing the color's red, green, and
-    blue data in that order.
+    blue channels in that order.
   </dd>
   
   <dt><code>hslData()</code></dt>
   <dd>
     Returns an array containing the color's hue, saturation, and
-    lightness data in that order.
+    lightness channels in that order.
   </dd>
   
   <dt><code>toString()</code></dt>
   <dd>
-    Returns <code>this[Color.TOSTRING]()</code>.
+    Returns <code>this[Color.TO_STRING_METHOD]()</code>.
   </dd>
 </dl>
 
@@ -155,27 +171,36 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
 <p>Color names are case-insensitive.</p>
 
 <dl>
-  <dt><code>Color.define(<strong>colorName</strong>:string, <strong>RGB</strong>:array)</code></dt>
+  <dt><code>Color.define(<strong>colorName</strong>:string, <strong>RGB</strong>:array | string)</code></dt>
   <dd>
     Saves the specified RGB color under colorName, for later retrieval.
   </dd>
   
   <dt><code>Color.get(<strong>colorName</strong>:string)</code></dt>
   <dd>
-    Will attempt to return a previously defined color of the
-    name, <code>colorName</code>, before falling back and retrieving
-    the computed CSS color values where available. IE is not able to
-    retrieve computed color values.
-  </dd>
-  
-  <dt><code>Color.parse(<strong>cssFunction</strong>:string)</code></dt>
-  <dd>
-    Returns the color represented by a CSS function (eg. <code>hsl(0, 100%, 50%)</code>).
+    Returns a new color instance instance using the RGB data from a
+    previously defined color with the name, <code>colorName</code>.
   </dd>
   
   <dt><code>Color.del(<strong>colorName</strong>:string)</code></dt>
   <dd>
     Deletes a previously defined color with the name of <code>colorName</code>.
+  </dd>
+  
+  <dt><code>Color.clearColors()</code></dt>
+  <dd>
+    Clears all color definitions.
+  </dd>
+  
+  <dt><code>Color.parse(<strong>cssFunction</strong>:string)</code></dt>
+  <dd>
+    Returns the color represented by a CSS function (eg. <code>hsl(0, 100%, 50%)</code>)
+    or hex triplet. If no color could be parsed, this returns null.
+    This function intentionally allows invalid syntax when parsing
+    css functions. As long as the first three non-whitespace characters
+    (case-insensitive) are "rgb" or "hsl" and the arguments (which are
+    all optional and default to zero) are separated by commas, this
+    function will be able to parse the CSS function.
   </dd>
   
   <dt><code>Color.random([<strong>rangeStart</strong>:int | string] [, <strong>rangeEnd</strong>:int | string])</code></dt>
@@ -208,7 +233,7 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <stron
 
 <h3>Configuration properties</h3>
 <dl>
-  <dt><code>Color.TOSTRING</code></dt>
+  <dt><code>Color.TO_STRING_METHOD : string</code></dt>
   <dd>
     The method name of which to call when a color instance's
     <code>toString()</code> method is called. This defaults to

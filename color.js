@@ -1,8 +1,8 @@
 /*
  * color.js
- * Version 0.2.1.1
+ * Version 0.2.1.2
  *
- * 2009-09-11
+ * 2009-09-12
  * 
  * By Elijah Grey, http://eligrey.com
  *
@@ -10,8 +10,14 @@
  *   See COPYING.md
  */
 
+/*jslint undef: true, nomen: true, eqeqeq: true, regexp: true, strict: true, newcap: true, immed: true */
+
+"use strict";
+
 var Color = (function () {
-	var Color = function Color (r, g, b, a) {
+	var
+	str   = "string",
+	Color = function Color(r, g, b, a) {
 		var
 		color    = this,
 		args     = arguments.length,
@@ -41,28 +47,18 @@ var Color = (function () {
 		}
 		
 		this.channels = [
-			typeof r === str && parseHex(r)    || r,
-			typeof g === str && parseHex(g)    || g,
-			typeof b === str && parseHex(b)    || b,
+			typeof r === str && parseHex(r) || r,
+			typeof g === str && parseHex(g) || g,
+			typeof b === str && parseHex(b) || b,
 			(typeof a !== str && typeof a !== "number") && 1 ||
-			typeof a === str && parseFloatP(a) || a
+				typeof a === str && parseFloat(a) || a
 		];
 	},
 	proto       = Color.prototype,
-	str         = "string",
 	undef       = "undefined",
 	lowerCase   = "toLowerCase",
-	parseFloatP = parseFloat,
 	math        = Math,
-	doc         = document,
-	docEl       = doc.documentElement,
-	defaultView = doc.defaultView,
-	hasOwnProp  = Object.prototype.hasOwnProperty,
-	False       = false;
-	
-	Color.table = {
-		"transparent": [0, 0, 0, 0]
-	};
+	colorDict;
 	
 	// RGB to HSL and HSL to RGB code from
 	// http://www.mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
@@ -107,11 +103,21 @@ var Color = (function () {
 		r, g, b,
 		
 		hue2rgb = function (p, q, t){
-		    if (t < 0) t += 1;
-		    if (t > 1) t -= 1;
-		    if (t < 1/6) return p + (q - p) * 6 * t;
-		    if (t < 1/2) return q;
-		    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+		    if (t < 0) {
+		    	t += 1;
+		    }
+		    if (t > 1) {
+		    	t -= 1;
+		    }
+		    if (t < 1/6) {
+		    	return p + (q - p) * 6 * t;
+		    }
+		    if (t < 1/2) {
+		    	return q;
+		    }
+		    if (t < 2/3) {
+		    	return p + (q - p) * (2/3 - t) * 6;
+		    }
 		    return p;
 		};
 		
@@ -130,7 +136,7 @@ var Color = (function () {
 	};
 	
 	Color.rgb = function (r, g, b, a) {
-		return new Color(r, g, b, typeof a !== undef ? a : 1)
+		return new Color(r, g, b, typeof a !== undef ? a : 1);
 	};
 	
 	Color.hsl = function (h, s, l, a) {
@@ -139,22 +145,23 @@ var Color = (function () {
 		return new Color(ceil(rgb[0]), ceil(rgb[1]), ceil(rgb[2]), typeof a !== undef ? a : 1);
 	};
 	
-	Color.TOSTRING = "hexTriplet"; // default toString method used
+	Color.TO_STRING_METHOD = "hexTriplet"; // default toString method used
 	
 	Color.parse = function (color) {
+		color = color.replace(/^\s+/g, "") // trim leading whitespace
+			[lowerCase]();
+		
 		if (color[0] === "#") {
 			return new Color(color);
-		} else if (color === "transparent") {
-			return Color.get(color);
 		}
 		
-		var
-		cssFn = color.substr(0, 3),
-		color = color.replace(/[^\d,.]/g, "").split(","),
+		var cssFn = color.substr(0, 3), i;
+		
+		color = color.replace(/[^\d,.]/g, "").split(",");
 		i     = color.length;
 		
 		while (i--) {
-			color[i] = color[i] && parseFloatP(color[i]) || 0;
+			color[i] = color[i] && parseFloat(color[i]) || 0;
 		}
 		
 		switch (cssFn) {
@@ -167,56 +174,31 @@ var Color = (function () {
 				return Color.hsl.apply(Color, color);
 		}
 		
-		return False;
+		return null;
 	};
 	
+	(Color.clearColors = function () {
+		colorDict = {
+			transparent: [0, 0, 0, 0]
+		};
+	})();
+	
 	Color.define = function (color, rgb) {
-		Color.table[color[lowerCase]()] = rgb;
+		colorDict[color[lowerCase]()] = rgb;
 	};
 	
 	Color.get = function (color) {
 		color = color[lowerCase]();
 		
-		if (hasOwnProp.call(Color.table, color)) {
-			return Color.apply(null, Color.table[color]);
+		if (Object.prototype.hasOwnProperty.call(colorDict, color)) {
+			return Color.apply(null, [].concat(colorDict[color]));
 		}
 		
-		if (typeof defaultView === undef || typeof defaultView.getComputedStyle === undef) {
-			return False;
-		}
-		
-		var
-		el      = doc.createElement("div"),
-		style   = el.style,
-		bgColor = "backgroundColor",
-		color;
-		
-		style.display = "none";
-		
-		try {
-			style[bgColor] = color;
-		} catch (e) {
-			return False;
-		}
-		
-		if (!style[bgColor] || style[bgColor] === "transparent") {
-			return False;
-		}
-		
-		docEl.appendChild(el);
-		
-		color = defaultView.getComputedStyle(el, null)[bgColor];
-				
-		style.removeProperty(bgColor);
-		style.removeProperty("display");
-		
-		docEl.removeChild(el);
-		
-		return Color.parse(color);
+		return null;
 	};
 	
 	Color.del = function (color) {
-		return delete Color.table[color[lowerCase]()];
+		return delete colorDict[color[lowerCase]()];
 	};
 	
 	Color.random = function (rangeStart, rangeEnd) {
@@ -239,7 +221,7 @@ var Color = (function () {
 	};
 	
 	proto.toString = function () {
-		return this[Color.TOSTRING]();
+		return this[Color.TO_STRING_METHOD]();
 	};
 	
 	proto.valueOf = proto.getValue = function () {
@@ -278,6 +260,8 @@ var Color = (function () {
 		return color.channels[3] === 1 ? color.hexTriplet() : color.rgba();
 	};
 	
+	// TODO: make the following functions less redundant
+	
 	proto.rgbData = function () {
 		return this.channels.slice(0, 3);
 	};
@@ -291,7 +275,7 @@ var Color = (function () {
 	};
 	
 	proto.rgba = function () {
-		return "rgba(" + this.channels.slice(0, 4).join(",") + ")";
+		return "rgba(" + this.channels.join(",") + ")";
 	};
 	
 	proto.hsl = function () {
@@ -300,7 +284,7 @@ var Color = (function () {
 	};
 	
 	proto.hsla = function () {
-		var hsl = this.hslData();
+		var hsl = this.hslaData();
 		return "hsla(" + hsl[0] * 360 + "," + (hsl[1] * 100) + "%," + (hsl[2] * 100) + "%," + this.channels[3] + ")";
 	};
 	
