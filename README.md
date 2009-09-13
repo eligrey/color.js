@@ -96,7 +96,7 @@ Color objects can be instantiated in any of the following ways:
 <pre><code>color = [new ]Color(<strong>color</strong>:int | string, [, <strong>alpha</strong>:float])
 color = [new ]Color(<strong>red</strong>:int | string, <strong>green</strong>:int | string, <strong>blue</strong>:int | string [, <strong>alpha</strong>:float | string])
 color = Color.rgb(<strong>red</strong>:int, <strong>green</strong>:int, <strong>blue</strong>:int [, <strong>alpha</strong>:float])
-color = Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <strong>hue</strong>:float [, <strong>alpha</strong>:float])</code></pre>
+color = Color.hsl(<strong>hue</strong>:float, <strong>saturation</strong>:float, <strong>lightness</strong>:float [, <strong>alpha</strong>:float])</code></pre>
 
 <h3>Instance methods and properties</h3>
 
