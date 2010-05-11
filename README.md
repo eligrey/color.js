@@ -240,3 +240,6 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>saturation</strong>:float,
     <code>hexTriplet</code>.
   </dd>
 </dl>
+
+
+![Tracking image](//in.getclicky.com/212712ns.gif =1x1)
