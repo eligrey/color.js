@@ -1,9 +1,10 @@
-This program is dual-licensed under the GNU GPL v3 and the X11/MIT license.
+This program is dual-licensed under the GNU GPL v3 and the MIT/X11 license.
 
-X11/MIT license
+
+MIT/X11 license
 ---------------
 
-Copyright (c) 2009  Elijah Grey
+Copyright (c) 2010 [Elijah Grey]
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -26,10 +27,11 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
+
 GNU GPL v3 license
 ------------------
 
-Copyright (c) 2009  Elijah Grey
+Copyright (c) 2010 [Elijah Grey]
 
 This software is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,3 +45,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+  [Elijah Grey]: http://eligrey.com
