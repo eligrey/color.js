@@ -1,7 +1,7 @@
 /*
  * color.js CSS Module
  * 
- * By Elijah Grey, http://eligrey.com
+ * By Eli Grey, http://eligrey.com
  *
  * License: GNU GPL v3 and the X11/MIT license
  *   See COPYING.md
