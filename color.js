@@ -12,6 +12,8 @@
 
 /*jslint undef: true, nomen: true, eqeqeq: true, regexp: true, strict: true, newcap: true, immed: true */
 
+/*! @source http://purl.eligrey.com/github/color.js/blob/master/color.js*/
+
 "use strict";
 
 var Color = (function () {

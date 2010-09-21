@@ -11,6 +11,8 @@
 
 /*global Color */
 
+/*! @source http://purl.eligrey.com/github/color.js/blob/master/css.color.js*/
+
 "use strict";
 
 (function () {
