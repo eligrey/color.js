@@ -215,7 +215,7 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>saturation</strong>:float,
     Returns a color constructed from the specified RGB values.
   </dd>
   
-  <dt><code>Color.hsl(<strong>hue</strong>:float, <strong>hue</strong>:float, <strong>hue</strong>:float [, <strong>alpha</strong>:float])</code></dt>
+  <dt><code>Color.hsl(<strong>hue</strong>:float, <strong>saturation</strong>:float, <strong>lightness</strong>:float [, <strong>alpha</strong>:float])</code></dt>
   <dd>
     Returns a color constructed from the specified HSL values.
   </dd>
