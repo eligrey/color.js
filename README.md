@@ -242,4 +242,4 @@ color = Color.hsl(<strong>hue</strong>:float, <strong>saturation</strong>:float,
 </dl>
 
 
-![Tracking image](//in.getclicky.com/212712ns.gif)
+![Tracking image](https://in.getclicky.com/212712ns.gif)
