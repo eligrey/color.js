@@ -5,8 +5,8 @@
  * 2009-09-12
  * 
  * By Eli Grey, http://eligrey.com
- * Licensed under the X11/MIT License
- *   See LICENSE.md
+ * Licensed under the MIT License
+ *   See https://github.com/eligrey/color.js/blob/master/LICENSE.md
  */
 
 /*jslint undef: true, nomen: true, eqeqeq: true, regexp: true, strict: true, newcap: true, immed: true */
