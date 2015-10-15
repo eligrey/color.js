@@ -2,8 +2,8 @@
  * color.js CSS Module
  * 
  * By Eli Grey, http://eligrey.com
- * Licensed under the X11/MIT License
- *   See LICENSE.md
+ * Licensed under the MIT License
+ *   See https://github.com/eligrey/color.js/blob/master/LICENSE.md
  */
 
 /*jslint white: true, onevar: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
